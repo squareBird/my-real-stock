@@ -8,17 +8,18 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/stock")
 public class StockInfoController {
 
     private final StockInfoService stockInfoService;
 
-    @RequestMapping(value = "/stock/{ticker}", method = RequestMethod.GET)
-    public ResponseEntity stockInfo(@PathVariable String ticker){
+    @RequestMapping(value = "/find", method = RequestMethod.POST)
+    public ResponseEntity getStockInfo(@RequestBody StockInfoRequestDto stockInfoRequestDto){
 
-        StockInfoResponseDto stockInfoResponseDto = stockInfoService.findStockInfo(ticker);
+        StockInfoResponseDto stockInfoResponseDto = stockInfoService.findStockInfo(stockInfoRequestDto.getTicker());
 
         return new ResponseEntity(stockInfoResponseDto, HttpStatus.OK);
+
     }
 
 }

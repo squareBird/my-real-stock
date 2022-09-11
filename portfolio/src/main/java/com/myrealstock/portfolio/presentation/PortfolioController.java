@@ -1,6 +1,5 @@
 package com.myrealstock.portfolio.presentation;
 
-import com.myrealstock.portfolio.application.FeignStockInfoService;
 import com.myrealstock.portfolio.application.PortfolioService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,18 +11,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/portfolio")
+@RequestMapping("/api")
 public class PortfolioController {
 
     private final PortfolioService portfolioService;
-    private final FeignStockInfoService feignStockInfoService;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/add")
-    ResponseEntity<StockInfoResponseDto> addStock(@RequestBody StockInfoRequestDto stockInfoRequestDto) {
+//    // 포트폴리오에 주식 추가
+//    @RequestMapping(method = RequestMethod.POST, value = "/add")
+////    @RequestMapping(method = RequestMethod.POST, value = "/portfolio/{portfolioName}/add")
+//    ResponseEntity<StockInfoResponseDto> addStock(@RequestBody StockInfoRequestDto stockInfoRequestDto) {
+//
+//        StockInfoResponseDto result = portfolioService.getStockInfo(stockInfoRequestDto);
+//
+//        return new ResponseEntity(result, HttpStatus.OK);
+//    }
 
-        StockInfoResponseDto result = feignStockInfoService.getStockInfo(stockInfoRequestDto.getTicker());
+    // 포트폴리오 생성
+    @RequestMapping(method = RequestMethod.POST, value = "/portfolio")
+    ResponseEntity generatePortfolio(@RequestBody GeneratePortfolioRequestDto generatePortfolioRequestDto) {
 
-        return new ResponseEntity(result, HttpStatus.OK);
+        portfolioService.generatePortfolio(generatePortfolioRequestDto);
+
+        return new ResponseEntity("success", HttpStatus.OK);
     }
 
 }
