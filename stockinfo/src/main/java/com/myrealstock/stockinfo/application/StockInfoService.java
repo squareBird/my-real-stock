@@ -1,12 +1,7 @@
 package com.myrealstock.stockinfo.application;
 
-import com.myrealstock.stockinfo.domain.StockInfoResponseDto;
+import com.myrealstock.stockinfo.presentation.StockInfoResponseDto;
 import org.springframework.stereotype.Service;
-
-import javax.net.ssl.HttpsURLConnection;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 @Service
 public class StockInfoService {
@@ -18,7 +13,7 @@ public class StockInfoService {
 //        URL url = new URL("https://cloud.iexapis.com/stable/stock/"+ ticker + "/book?token=" + API_TOKEN);
 //        HttpsURLConnection https = (HttpsURLConnection) url.openConnection();
 
-        return new StockInfoResponseDto("aapl", 200.1);
+        return new StockInfoResponseDto(ticker, 200.1);
 
     }
 

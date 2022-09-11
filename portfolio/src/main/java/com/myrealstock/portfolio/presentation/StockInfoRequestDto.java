@@ -1,15 +1,14 @@
-package com.myrealstock.stockinfo.domain;
+package com.myrealstock.portfolio.presentation;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-public class StockInfoResponseDto {
+public class StockInfoRequestDto {
 
-    String ticker;
-    Double price;
+    private String ticker;
 
 }

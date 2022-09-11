@@ -1,7 +1,6 @@
 package com.myrealstock.stockinfo.presentation;
 
 import com.myrealstock.stockinfo.application.StockInfoService;
-import com.myrealstock.stockinfo.domain.StockInfoResponseDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
