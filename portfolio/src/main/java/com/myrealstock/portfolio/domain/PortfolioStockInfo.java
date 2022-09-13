@@ -18,7 +18,8 @@ public class PortfolioStockInfo {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private String portfolioName;
+    private Long portfolioId;
+    private String ticker;
     private Integer count;
     private Double price;
 

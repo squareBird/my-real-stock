@@ -1,6 +1,5 @@
 package com.myrealstock.portfolio.domain;
 
-import com.myrealstock.portfolio.presentation.GeneratePortfolioRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,17 +13,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class PortfolioInfo {
 
-    public PortfolioInfo(GeneratePortfolioRequestDto generatePortfolioRequestDto) {
-        this.portfolioName = generatePortfolioRequestDto.getPortfolioName();
-        this.userName = generatePortfolioRequestDto.getUserName();
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private String userName;
+    private Long userId;
     private String portfolioName;
 
 }

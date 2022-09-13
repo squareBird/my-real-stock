@@ -4,10 +4,9 @@ import com.myrealstock.portfolio.application.PortfolioService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -16,23 +15,37 @@ public class PortfolioController {
 
     private final PortfolioService portfolioService;
 
-//    // 포트폴리오에 주식 추가
-//    @RequestMapping(method = RequestMethod.POST, value = "/add")
-////    @RequestMapping(method = RequestMethod.POST, value = "/portfolio/{portfolioName}/add")
-//    ResponseEntity<StockInfoResponseDto> addStock(@RequestBody StockInfoRequestDto stockInfoRequestDto) {
-//
-//        StockInfoResponseDto result = portfolioService.getStockInfo(stockInfoRequestDto);
-//
-//        return new ResponseEntity(result, HttpStatus.OK);
-//    }
-
     // 포트폴리오 생성
     @RequestMapping(method = RequestMethod.POST, value = "/portfolio")
-    ResponseEntity generatePortfolio(@RequestBody GeneratePortfolioRequestDto generatePortfolioRequestDto) {
+    ResponseEntity generatePortfolio(@RequestBody GeneratePortfolioRequestDto generatePortfolioRequestDto,
+                                     @RequestHeader(value="USER-TOKEN") String userToken) {
 
-        portfolioService.generatePortfolio(generatePortfolioRequestDto);
+        GeneratePortfolioResponseDto result = portfolioService.generatePortfolio(userToken, generatePortfolioRequestDto);
 
-        return new ResponseEntity("success", HttpStatus.OK);
+        return new ResponseEntity(result, HttpStatus.OK);
+
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/portfolio")
+    ResponseEntity getPortfolioList(@RequestHeader(value="USER-TOKEN") String userToken) {
+
+        List<String> result = portfolioService.getPortfolioInfoList(userToken);
+
+        return new ResponseEntity(result, HttpStatus.OK);
+
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/portfolio/extend")
+    ResponseEntity extendStock(@RequestBody ExtendStockRequestDto extendStockRequestDto,
+                               @RequestHeader(value="USER-TOKEN") String userToken) {
+
+        ExtendStockResponseDto extendStockResponseDto = portfolioService.extendStock(userToken, extendStockRequestDto);
+
+        return new ResponseEntity(extendStockResponseDto, HttpStatus.OK);
+
+    }
+
+
+
 
 }
