@@ -1,16 +1,18 @@
 package com.myrealstock.portfolio.domain;
 
-import com.myrealstock.portfolio.presentation.ExtendStockRequestDto;
-
 import java.util.List;
 
 public interface PortfolioRepository {
 
-    void saveNewPortfolio(PortfolioInfo portfolioInfo);
+    void saveNewPortfolioInfo(PortfolioInfo portfolioInfo);
 
-    void saveNewPortfolioStock(PortfolioStockInfo portfolioStockInfo);
+    void addPortfolioStockInfo(PortfolioStockInfo portfolioStockInfo);
 
     List<PortfolioInfo> findPortfolioInfoListByUserId(Long userId);
+
+    PortfolioStockInfo removePortfolioStockInfo(Long userId, Long portfolioId, String ticker);
+
+    PortfolioStockInfo modifyPortfolioStockInfo();
 
     //    public void extendsStock(String userToken, PortfolioStockInfo portfolioStockInfo);
 

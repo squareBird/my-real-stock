@@ -28,12 +28,31 @@ public class PortfolioService {
         return Long.valueOf(userToken);
     }
 
+    private void validPortfolio(Long userId, Long portfolioId) {
+
+        List<Long> userPortfolioList = portfolioRepository.findPortfolioInfoListByUserId(userId)
+                .stream()
+                .map(x->x.getId())
+                .toList();
+
+        if(!userPortfolioList.contains(portfolioId))
+            throw new PortfolioNotFoundException();
+
+    }
+
+    // 해당 티커가 존재하는지 검증
+    private void validTicker(String ticker) {
+        stockInfoService.getStockInfo(new StockInfoRequestDto(ticker));
+    }
+
     // 로그인 정보가 확인되어야 추가 가능..
     // userToken을 통해받아온 userId와 DTO내부의 userId가 일치할 경우에만 추가
     public GeneratePortfolioResponseDto generatePortfolio(String userToken, GeneratePortfolioRequestDto generatePortfolioRequestDto) {
 
-        PortfolioInfo portfolioInfo = generatePortfolioRequestDto.dtoToEntity(getUserId(userToken));
-        portfolioRepository.saveNewPortfolio(portfolioInfo);
+        Long userId = getUserId(userToken);
+
+        PortfolioInfo portfolioInfo = generatePortfolioRequestDto.dtoToEntity(userId);
+        portfolioRepository.saveNewPortfolioInfo(portfolioInfo);
 
         return new GeneratePortfolioResponseDto(portfolioInfo);
 
@@ -41,7 +60,9 @@ public class PortfolioService {
 
     public List<String> getPortfolioInfoList(String userToken) {
 
-        List<String> result = portfolioRepository.findPortfolioInfoListByUserId(getUserId(userToken))
+        Long userId = getUserId(userToken);
+
+        List<String> result = portfolioRepository.findPortfolioInfoListByUserId(userId)
                 .stream()
                 .map(x->x.getPortfolioName())
                 .toList();
@@ -50,30 +71,42 @@ public class PortfolioService {
 
     }
 
-    private void validPortfolio(String userToken, ExtendStockRequestDto extendStockRequestDto) {
+    public AddStockResponseDto addStock(String userToken, AddStockRequestDto addStockRequestDto) {
 
-        List<Long> userPortfolioList = portfolioRepository.findPortfolioInfoListByUserId(getUserId(userToken))
-                .stream()
-                .map(x->x.getId())
-                .toList();
-
-        if(!userPortfolioList.contains(extendStockRequestDto.getPortfolioId()))
-            throw new PortfolioNotFoundException();
-
-    }
-
-    public ExtendStockResponseDto extendStock(String userToken, ExtendStockRequestDto extendStockRequestDto) {
+        Long userId = getUserId(userToken);
 
         // User가 가지고 있는 포트폴리오 정보가 맞는지 검증
-        validPortfolio(userToken, extendStockRequestDto);
+        validPortfolio(userId, addStockRequestDto.getPortfolioId());
+        validTicker(addStockRequestDto.getTicker());
 
-        PortfolioStockInfo portfolioStockInfo = extendStockRequestDto.dtoToEntity();
-        portfolioRepository.saveNewPortfolioStock(portfolioStockInfo);
+        PortfolioStockInfo portfolioStockInfo = addStockRequestDto.dtoToEntity();
+        portfolioRepository.addPortfolioStockInfo(portfolioStockInfo);
 
-        return new ExtendStockResponseDto(userToken, portfolioStockInfo);
+        return new AddStockResponseDto(userId, portfolioStockInfo);
 
     }
 
+    public RemoveStockResponseDto removeStock(String userToken, RemoveStockRequestDto removeStockRequestDto) {
 
+        Long userId = getUserId(userToken);
+
+        validPortfolio(userId, removeStockRequestDto.getPortfolioId());
+
+        PortfolioStockInfo portfolioStockInfo = portfolioRepository.
+                removePortfolioStockInfo(userId, removeStockRequestDto.getPortfolioId(), removeStockRequestDto.getTicker());
+
+        return new RemoveStockResponseDto(userId, portfolioStockInfo);
+
+    }
+
+    public void showPortfolioDetail(String userToken) {
+        // 특정 포트롤리오 리스트를 가져옴
+
+        // 포트폴리오 리스트의 주식 티커를 가져옴
+        // 티커를 가져와서 stockInfo API와 연동해 실시간 주식 정보 및 배당 정보 등을 받아옴
+        // 금액계산
+
+        // 정리해서 보여주
+    }
 
 }

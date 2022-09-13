@@ -36,12 +36,22 @@ public class PortfolioController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/portfolio/extend")
-    ResponseEntity extendStock(@RequestBody ExtendStockRequestDto extendStockRequestDto,
+    ResponseEntity extendStock(@RequestBody AddStockRequestDto addStockRequestDto,
                                @RequestHeader(value="USER-TOKEN") String userToken) {
 
-        ExtendStockResponseDto extendStockResponseDto = portfolioService.extendStock(userToken, extendStockRequestDto);
+        AddStockResponseDto extendStockResponseDto = portfolioService.addStock(userToken, addStockRequestDto);
 
         return new ResponseEntity(extendStockResponseDto, HttpStatus.OK);
+
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/portfolio/remove")
+    ResponseEntity removeStock(@RequestBody RemoveStockRequestDto removeStockRequestDto,
+                               @RequestHeader(value="USER-TOKEN") String userToken) {
+
+        RemoveStockResponseDto removeStockResponseDto = portfolioService.removeStock(userToken, removeStockRequestDto);
+
+        return new ResponseEntity(removeStockResponseDto, HttpStatus.OK);
 
     }
 

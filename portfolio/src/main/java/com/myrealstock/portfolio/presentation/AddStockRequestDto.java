@@ -4,7 +4,7 @@ import com.myrealstock.portfolio.domain.PortfolioStockInfo;
 import lombok.Getter;
 
 @Getter
-public class ExtendStockRequestDto {
+public class AddStockRequestDto {
 
     private Long portfolioId;
     private String ticker;

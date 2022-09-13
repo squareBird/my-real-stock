@@ -20,12 +20,12 @@ public class DatabasePortfolioRepository implements PortfolioRepository {
     private final EntityManager em;
 
     @Override // 포트폴리오 정보 저장
-    public void saveNewPortfolio(PortfolioInfo portfolioInfo) {
+    public void saveNewPortfolioInfo(PortfolioInfo portfolioInfo) {
         em.persist(portfolioInfo);
     }
 
     @Override
-    public void saveNewPortfolioStock(PortfolioStockInfo portfolioStockInfo) {
+    public void addPortfolioStockInfo(PortfolioStockInfo portfolioStockInfo) {
         em.persist(portfolioStockInfo);
     }
 
@@ -41,4 +41,23 @@ public class DatabasePortfolioRepository implements PortfolioRepository {
 
     }
 
+    @Override
+    public PortfolioStockInfo removePortfolioStockInfo(Long userId, Long portfolioId, String ticker) {
+
+        PortfolioStockInfo result = em
+                .createQuery("select p from PortfolioStockInfo p where p.portfolioId = :portfolioId and p.ticker = :ticker", PortfolioStockInfo.class)
+                .setParameter("portfolioId", portfolioId)
+                .setParameter("ticker", ticker)
+                .getResultList().get(0);
+
+        em.remove(result);
+
+        return result;
+
+    }
+
+    @Override
+    public PortfolioStockInfo modifyPortfolioStockInfo() {
+        return null;
+    }
 }

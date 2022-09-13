@@ -4,16 +4,16 @@ import com.myrealstock.portfolio.domain.PortfolioStockInfo;
 import lombok.Getter;
 
 @Getter
-public class ExtendStockResponseDto {
+public class AddStockResponseDto {
 
-    private String userToken;
+    private Long userId;
     private Long portfolioId;
     private String ticker;
     private Integer count;
     private Double price;
 
-    public ExtendStockResponseDto(String userToken, PortfolioStockInfo portfolioStockInfo) {
-        this.userToken = userToken;
+    public AddStockResponseDto(Long userId, PortfolioStockInfo portfolioStockInfo) {
+        this.userId = userId;
         this.portfolioId = portfolioStockInfo.getPortfolioId();
         this.ticker = portfolioStockInfo.getTicker();
         this.count = portfolioStockInfo.getCount();

@@ -2,6 +2,7 @@ package com.myrealstock.portfolio.presentation;
 
 import com.myrealstock.portfolio.domain.DuplicatedPortfolioNameException;
 import com.myrealstock.portfolio.domain.PortfolioNotFoundException;
+import com.myrealstock.portfolio.domain.TickerNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,6 +19,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(PortfolioNotFoundException.class)
     public ResponseEntity handlerPortfolioNotFoundException(PortfolioNotFoundException exception) {
         return new ResponseEntity(exception.getMessage(), HttpStatus.NOT_EXTENDED);
+    }
+
+    @ExceptionHandler(TickerNotFoundException.class)
+    public ResponseEntity handlerTickerNotFoundException(TickerNotFoundException exception) {
+        return new ResponseEntity((exception.getMessage()), HttpStatus.NOT_EXTENDED);
     }
 
 
