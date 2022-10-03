@@ -4,6 +4,7 @@ import com.myrealstock.portfolio.domain.PortfolioInfo;
 import com.myrealstock.portfolio.domain.PortfolioNotFoundException;
 import com.myrealstock.portfolio.domain.PortfolioRepository;
 import com.myrealstock.portfolio.domain.PortfolioStockInfo;
+import com.myrealstock.portfolio.infrastructure.StockInfoFeignRepository;
 import com.myrealstock.portfolio.presentation.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,7 @@ import java.util.List;
 public class PortfolioService {
 
     private final PortfolioRepository portfolioRepository;
-    private final com.myrealstock.portfolio.stockinfo.StockInfoService stockInfoService;
-
-    StockInfoResponseDto getStockInfo(StockInfoRequestDto stockInfoRequestDto) {
-        return stockInfoService.getStockInfo(stockInfoRequestDto);
-    }
+    private final StockInfoFeignRepository stockInfoService;
 
     Long getUserId(String userToken) {
         // userToken을 활용해서 userId값 얻어오는 메소드 필요. 하지만 지금은 그냥 한다...

@@ -1,4 +1,4 @@
-package com.myrealstock.portfolio.stockinfo;
+package com.myrealstock.portfolio.infrastructure;
 
 import com.myrealstock.portfolio.configure.FeignConfig;
 import com.myrealstock.portfolio.presentation.StockInfoRequestDto;

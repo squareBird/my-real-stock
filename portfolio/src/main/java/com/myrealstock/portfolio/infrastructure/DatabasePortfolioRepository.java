@@ -24,7 +24,7 @@ public class DatabasePortfolioRepository implements PortfolioRepository {
         em.persist(portfolioInfo);
     }
 
-    @Override
+    @Override // 포트폴리오 구매 주식 정보 저장
     public void addPortfolioStockInfo(PortfolioStockInfo portfolioStockInfo) {
         em.persist(portfolioStockInfo);
     }
