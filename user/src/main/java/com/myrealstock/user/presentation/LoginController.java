@@ -1,44 +1,45 @@
 package com.myrealstock.user.presentation;
 
-import com.myrealstock.user.config.jwt.JwtAuthenticationFilter;
-import com.myrealstock.user.config.jwt.JwtTokenProvider;
-import lombok.AllArgsConstructor;
+import com.myrealstock.user.application.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.URI;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
-@RequestMapping("/api")
 public class LoginController {
 
-    private final JwtTokenProvider jwtTokenProvider;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final UserService userService;
 
-    @PostMapping("/authenticate")
-    public ResponseEntity<TokenDto> authentication(@Valid @RequestBody LoginDto loginDto) {
+    @GetMapping("/")
+    public String userLogin() {
+        return "login";
+    }
 
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getUserId(), loginDto.getPassword());
+//    @GetMapping("/node")
+//    public ResponseEntity urlRedirect() {
+//
+//        HttpHeaders responseHeaders = new HttpHeaders();
+//        responseHeaders.setLocation(URI.create("http://localhost:3000"));
+//
+//
+//        return new ResponseEntity("Redirect", responseHeaders, HttpStatus.MOVED_PERMANENTLY);
+//    }
 
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String jwt = jwtTokenProvider.createToken(authentication);
+    @GetMapping("/logout")
+    public String userLogout() {
+        return "logout";
+    }
 
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JwtAuthenticationFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
-        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+    @PostMapping("/signup")
+    public ResponseEntity<SignUpDto> signup(@Valid @RequestBody SignUpDto signUpDto) {
+        return ResponseEntity.ok(userService.signup(signUpDto));
     }
 }

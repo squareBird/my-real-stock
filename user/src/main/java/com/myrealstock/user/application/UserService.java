@@ -3,7 +3,7 @@ package com.myrealstock.user.application;
 
 import com.myrealstock.user.domain.Authority;
 import com.myrealstock.user.domain.User;
-import com.myrealstock.user.domain.UserRepository;
+import com.myrealstock.user.infrastructure.UserRepository;
 import com.myrealstock.user.presentation.SignUpDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
