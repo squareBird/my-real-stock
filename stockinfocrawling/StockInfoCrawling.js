@@ -34,9 +34,7 @@ const findStock = function(stockName, no)  {
                         price4: $("tbody td.number")[++j].children[0].data,
                         price5: $("tbody td.number")[++j].children[0].data
                     };
-
-                    const JsonInfo = JSON.stringify(stockInfo);
-                    resolve(JsonInfo);
+                    resolve(stockInfo);
                 }
                 k += 2;
             }
