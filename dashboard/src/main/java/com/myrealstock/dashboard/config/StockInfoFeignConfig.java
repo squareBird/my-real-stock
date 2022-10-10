@@ -1,4 +1,4 @@
-package com.myrealstock.stockinfo.config;
+package com.myrealstock.dashboard.config;
 
 import feign.Logger;
 import org.springframework.context.annotation.Bean;

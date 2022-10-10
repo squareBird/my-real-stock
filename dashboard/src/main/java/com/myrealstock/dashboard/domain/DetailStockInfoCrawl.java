@@ -1,15 +1,15 @@
-package com.myrealstock.stockinfo.presentation;
+package com.myrealstock.dashboard.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Data
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class StockInfoDto {
+public class DetailStockInfoCrawl {
 
-    private String name;
+    private String stockName;
     private String nowPrice;
     private String compareNum;
     private String percentage;
