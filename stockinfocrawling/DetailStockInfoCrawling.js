@@ -24,7 +24,7 @@ const findStock = function(stockName, no)  {
 
                     let j = i * 8;
                     let stockInfo = {
-                        name: $("tbody a.tltle")[i].children[0].data,
+                        stockName: $("tbody a.tltle")[i].children[0].data,
                         nowPrice: $("tbody td.number")[j++].children[0].data,
                         compareNum: $("tbody td.number span.tah")[k++].children[0].data.replace(/(\s*)/g, ""),
                         percentage: $("tbody td.number span.tah")[k++].children[0].data.replace(/(\s*)/g, ""),
