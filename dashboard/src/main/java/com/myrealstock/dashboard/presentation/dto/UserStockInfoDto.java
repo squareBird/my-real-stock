@@ -1,15 +1,19 @@
 package com.myrealstock.dashboard.presentation.dto;
 
 import com.myrealstock.dashboard.domain.UserStockInfo;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 public class UserStockInfoDto {
 
     private String userId;
     private String stockName;
     private Integer stockNum;
-    private Long average;
+    private Double average;
 
     public UserStockInfo dtoToEntity() {
         UserStockInfo userStockInfo = UserStockInfo.builder()
