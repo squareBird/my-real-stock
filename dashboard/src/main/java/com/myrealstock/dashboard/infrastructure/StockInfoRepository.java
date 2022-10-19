@@ -9,4 +9,8 @@ public interface StockInfoRepository extends JpaRepository<UserStockInfo, Long> 
 
     List<UserStockInfo> findByUserId(String userId);
 
+    Integer countByUserId(String userId);
+
+    UserStockInfo findByUserIdAndStockName(String userId, String stockName);
+
 }
