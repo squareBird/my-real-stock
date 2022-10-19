@@ -1,5 +1,6 @@
 package com.myrealstock.dashboard.domain;
 
+import com.myrealstock.dashboard.exception.CantSaveUnderZeroValueInStockNumAndAverageException;
 import com.myrealstock.dashboard.presentation.dto.UpdateInfoDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,7 +41,12 @@ public class UserStockInfo {
 
     private LocalDateTime createdAt;
 
+    private LocalDateTime modifiedAt;
+
     public UserStockInfo updateInfo(String userId, String stockName, UpdateInfoDto updateInfoDto) {
+        // 입력 값 검증(주식 갯수, 평단가가 0보다 작으면 안됨)
+        checkValidateStockNumAndAverage(updateInfoDto);
+
         UserStockInfo userStockInfo = UserStockInfo.builder()
                 .id(this.id)
                 .userId(userId)
@@ -48,10 +54,16 @@ public class UserStockInfo {
                 .stockNum(updateInfoDto.getStockNum())
                 .average(updateInfoDto.getAverage())
                 .createdAt(this.createdAt)
+                .modifiedAt(LocalDateTime.now())
                 .build();
 
         return userStockInfo;
     }
 
+    private void checkValidateStockNumAndAverage(UpdateInfoDto updateInfoDto) {
+        if(updateInfoDto.getStockNum() <= Constants.MIN || updateInfoDto.getAverage() <= Constants.MIN) {
+            throw new CantSaveUnderZeroValueInStockNumAndAverageException();
+        }
+    }
 
 }

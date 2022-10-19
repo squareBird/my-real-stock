@@ -22,6 +22,7 @@ public class UserStockInfoDto {
                 .stockNum(this.stockNum)
                 .average(this.average)
                 .createdAt(LocalDateTime.now())
+                .modifiedAt(LocalDateTime.now())
                 .build();
 
         return userStockInfo;
