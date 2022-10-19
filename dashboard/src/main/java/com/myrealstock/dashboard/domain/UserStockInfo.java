@@ -1,5 +1,6 @@
 package com.myrealstock.dashboard.domain;
 
+import com.myrealstock.dashboard.presentation.dto.UpdateInfoDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,6 +39,19 @@ public class UserStockInfo {
     private Double average;    // 평단가
 
     private LocalDateTime createdAt;
+
+    public UserStockInfo updateInfo(String userId, String stockName, UpdateInfoDto updateInfoDto) {
+        UserStockInfo userStockInfo = UserStockInfo.builder()
+                .id(this.id)
+                .userId(userId)
+                .stockName(stockName)
+                .stockNum(updateInfoDto.getStockNum())
+                .average(updateInfoDto.getAverage())
+                .createdAt(this.createdAt)
+                .build();
+
+        return userStockInfo;
+    }
 
 
 }
